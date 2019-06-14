@@ -1,0 +1,31 @@
+<h1 style="text-align: center;">Sismos</h1>
+<table class="table">
+	<thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Id Público</th>
+      <th scope="col">Magnitud</th>
+      <th scope="col">Hora</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Longitud</th>
+      <th scope="col">Latitud</th>
+    </tr>
+  </thead>
+  <tbody>
+	<% @features.each_with_index do |feature,index| %>
+		<tr>
+		<th scope="row"><%=index + 1%></th>
+			<td><%= feature[:attributes][:external_id] %></td>
+			<td><%= feature[:attributes][:magnitude] %></td>
+			<td><%= Time.at(feature[:attributes][:time].to_s.first(10).to_i) %></td>
+			<td><%= feature[:attributes][:mag_type] %></td>
+			<td><%= feature[:attributes][:coordinates][:longitude] %></td>
+			<td><%= feature[:attributes][:coordinates][:latitude] %></td>
+		</tr>
+  <% end %>
+	</tbody>
+</table>
+<div style="text-align: center;">
+	<%= will_paginate @features,  previous_label: 'Pagina previa', next_label:  'Pagina
+	siguiente'  %>
+</div>
