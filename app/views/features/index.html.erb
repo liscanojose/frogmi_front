@@ -23,7 +23,7 @@
 				<td><%= feature[:attributes][:mag_type] %></td>
 				<td><%= feature[:attributes][:coordinates][:longitude] %></td>
 				<td><%= feature[:attributes][:coordinates][:latitude] %></td>
-				<td><%= button_to 'Agregar comentario', create_comment_feature_path(feature[:id]), method: :post,class: 'btn btn-primary' %></td>
+				<td><%= button_to 'Agregar comentario', create_comment_feature_path(feature[:id]),  {remote: true, 'data-toggle': "modal", 'data-target': '#feature-modal','data-id': feature[:id], 'class': 'btn btn-primary'} %></td>
 			</tr>
 		<% end %>
 		</tbody>
@@ -32,4 +32,43 @@
 		<%= will_paginate @features,  previous_label: 'Pagina previa', next_label:  'Pagina
 		siguiente'  %>
 	</div>
+	<div id="feature-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+			<div class="modal-header">
+				<% @id= %>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><%= 'Feature' %></h4>
+      </div>
+      <%= form_for :comment, url: "http://localhost:3000/features/#{11970}/create_message" do |form| %>
+        <div class="modal-body">
+          <div class="form-group">
+            <%= form.text_area :message, cols: 65, rows: 5, required: true%>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <%= form.submit 'Agregar comentario',class: "btn btn-primary btn-lg btn-block", id:"save" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
+</div>
+<script>
+var feature_id = ""
+$('.btn btn-primary').click(function() {
+	 feature_id = $("#add_comment").data('id');
+	 alert("feature_id:" + feature_id);
+});
+
+$(".btn[data-toggle='modal']").button().click(function(){
+	feature_id = $(this).data('id');
+	var formAction = $(this).attr('action',"http://localhost:3000/features/" + feature_id + "/create_message");
+});    
+
+$("form").submit(function() {
+	var formAction = $(this).attr('action',"http://localhost:3000/features/" + feature_id + "/create_message");
+});
+
+</script>
