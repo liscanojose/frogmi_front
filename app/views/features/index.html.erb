@@ -1,5 +1,12 @@
 <div class="container">
 	<h1 style="text-align: center;">Sismos</h1>
+	<%= form_tag("http://localhost:3001/features", method: :get) do %>
+		<div class="form-group">
+			<%= text_field_tag "mag_type[]" %>
+			<%= submit_tag 'Buscar', class:"btn btn-success btn-sm "%>
+			</div>	
+	<% end %>
+	
 	<table class="table">
 		<thead class="thead-dark">
 			<tr>
@@ -68,7 +75,10 @@ $(".btn[data-toggle='modal']").button().click(function(){
 });    
 
 $("form").submit(function() {
-	var formAction = $(this).attr('action',"http://localhost:3000/features/" + feature_id + "/create_message");
+	if (feature_id != "")
+	{
+		$(this).attr('action',"http://localhost:3000/features/" + feature_id + "/create_message");
+	}
 });
 
 </script>
