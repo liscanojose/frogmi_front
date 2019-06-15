@@ -7,4 +7,7 @@ class FeaturesController < ApplicationController
 
   def create_comment
   end
+  def comments
+    @feature = Feature.comments(params[:id])
+  end
 end
