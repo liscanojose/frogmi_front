@@ -23,3 +23,5 @@ Things you may want to cover:
 
 * ...
 # frogmi_front
+
+Correr en el port 3001
